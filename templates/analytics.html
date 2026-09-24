@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Analytics Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f7f5;
+    margin:40px;
+}
+
+.cards{
+    display:flex;
+    gap:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    flex:1;
+    box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+.export-btn {
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.export-btn button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.export-btn button:hover {
+    background-color: #218838;
+}
+
+canvas{
+    margin-top:40px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🌾 Analytics Dashboard</h1>
+
+<a href="/">← Home</a>
+<br><br>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Predictions</h3>
+<h1>{{ total }}</h1>
+</div>
+
+<div class="card">
+<h3>Average Confidence</h3>
+<h1>{{ average }}%</h1>
+</div>
+
+<div class="card">
+<h3>Most Common</h3>
+<h1>{{ most_common }}</h1>
+</div>
+
+</div>
+
+<!-- CSV Download Button -->
+<div class="export-btn">
+    <a href="/export/csv">
+        <button>Download CSV Report</button>
+    </a>
+    <a href="/export/pdf">
+    <button>Download PDF Report</button>
+</a>
+</div>
+
+<canvas id="riceChart"></canvas>
+
+<script>
+    const labels = [
+    {% for item in chart_data %}
+    "{{ item.name }}",
+    {% endfor %}
+    ];
+    const values = [
+    {% for item in chart_data %}
+    {{ item.count }},
+    {% endfor %}
+    ];
+    new Chart(
+        document.getElementById("riceChart"),
+        {
+            type:"bar",
+            data:{
+                labels:labels,
+                datasets:[{
+                    label:"Predictions",
+                    data:values
+                }]
+            }
+        }
+        );
+
+</script>
+
+</body>
+</html>

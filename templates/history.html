@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction History</title>
+    <style>
+        body{
+            font-family: Arial;
+            margin:40px;
+            background:#f5f7fa;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        th,td{
+            padding:12px;
+            border:1px solid #ddd;
+            text-align:left;
+        }
+
+        th{
+            background:#2e7d32;
+            color:white;
+        }
+
+        h1{
+            color:#2e7d32;
+        }
+
+        a{
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🌾 Prediction History</h1>
+
+<a href="/">← Back to Home</a>
+
+<br><br>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Image</th>
+<th>Rice Type</th>
+<th>Confidence</th>
+<th>Time</th>
+</tr>
+
+{% for item in records %}
+<tr>
+<td>{{ item.id }}</td>
+<td>{{ item.image_name }}</td>
+<td>{{ item.rice_type }}</td>
+<td>{{ item.confidence }}%</td>
+<td>{{ item.created_at }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>

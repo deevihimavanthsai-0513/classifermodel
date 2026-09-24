@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Batch Rice Classification</title>
+    <style>
+        body{
+            font-family:Arial;
+            background:#f4f7f5;
+            margin:40px;
+        }
+
+        .card{
+            max-width:600px;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 5px 15px rgba(0,0,0,.1);
+        }
+
+        h1{
+            color:#2e7d32;
+            text-align:center;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin:20px 0;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2e7d32;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#1b5e20;
+        }
+
+        .back{
+            text-decoration:none;
+            display:block;
+            margin-top:20px;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🌾 Batch Rice Classification</h1>
+
+    <form action="/batch" method="post" enctype="multipart/form-data">
+
+        <input
+            type="file"
+            name="files"
+            multiple
+            accept="image/*"
+            required>
+
+        <button type="submit">
+            Predict All Images
+        </button>
+
+    </form>
+    {% if results %}
+    <hr><br>
+    <h2>Batch Prediction Summary</h2>
+    <p><strong>Total Images:</strong> {{ total }}</p>
+    <p><strong>Average Confidence:</strong> {{ average }}%</p>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <tr>
+            <th>Image</th>
+            <th>Prediction</th>
+            <th>Confidence</th>
+        </tr>
+    {% for item in results %}
+    <tr>
+        <td>{{ item.image }}</td>
+        <td>{{ item.rice_type }}</td>
+        <td>{{ item.confidence }}%</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+    <a href="/" class="back">
+        ← Back to Home
+    </a>
+
+</div>
+
+</body>
+</html>
